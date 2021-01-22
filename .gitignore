@@ -984,7 +984,7 @@ _deps
 *.exe
 *.out
 *.app
-
+*.bin
 ##### C
 # Prerequisites
 *.d
