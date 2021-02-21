@@ -19,25 +19,37 @@ typedef long long int ll;
 struct value{
     ll p,q,x;
 };
+struct myComp { 
+    constexpr bool operator()( 
+        pair<int, int> const& a, 
+        pair<int, int> const& b)    
+        const noexcept 
+    { 
+        return a.second > b.second; 
+    } 
+}; 
+
 typedef pair<ll, ll> pi;
 int main(){
     ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
     ll t,n,temp,q;
+    cin>>t;
     while(t--){
         cin>>n;
+        // cout<<n<<"ujj ";
         ll count=0;
-        priority_queue<pi,vector<pi>,greater<pi>> pq; 
+        priority_queue<pi,vector<pi>,myComp> pq; 
         // map<ll,ll> mp;
-        for(ll i=1;i<=n;i++){
+        cin>>count;
+        // cout<<count<<"hel "<<endl;
+        for(ll i=2;i<=n;i++){
             cin>>temp;
-            if(i==1) count=temp;
-            else{
-                cout<<pq.top().first<<" "<<pq.top().second<<endl;
-                pq.push(make_pair(i,temp));
+            // cout<<i<<" y "<<temp<<endl;
+                // cout<<pq.top().first<<" "<<pq.top().second<<endl;
+            pq.push(make_pair(i,temp));
                 // cout<<i<<" "<<temp<<endl;
-                cout<<pq.top().first<<" "<<pq.top().second<<endl;
-            }
+            // cout<<pq.top().first<<" "<<pq.top().second<<endl;
         }
         // pair<ll,ll> p=pq.top();
         // for(ll i=0;i<)
@@ -53,11 +65,18 @@ int main(){
             // cout<<pq.top().first<<" "<<pq.top().second<<endl;
             pt=pq.top();
             pq.pop();
-            if(count< pt.second){
+            if(count>=pt.second){
+                nxt.x=pt.second;
+                nxt.p=pt.first;
+                nxt.q=1 ;
+                v.pb(nxt);
+                count+=pt.second;
+            }
+            else{
                 if(pq.empty()){
                     // b=false;
                     times=2*n;
-                    break;
+                    // break;
                 }
                 else{
                     // pair<ll,ll> pt;
@@ -80,17 +99,10 @@ int main(){
                     v.pb(nxt);
                 }
             }
-            else{
-                nxt.x=pt.second;
-                nxt.p=pt.first;
-                nxt.q=1 ;
-                v.pb(nxt);
-                count+=pt.second;
-                // pq.pop();
-            }
         }
         if(times>=2*n) cout<<"-1\n";
         else{
+            cout<<v.size()<<endl;
             for(auto i:v){
                 cout<<i.p<<" "<<i.q<<" "<<i.x<<endl;
             }
